@@ -24,6 +24,12 @@ INSTALLED_APPS = [
 
     # my apps
     'apps.account',
+    'apps.member',
+    'apps.group',
+    'apps.event',
+
+    # packages
+    
 ]
 
 MIDDLEWARE = [
