@@ -1,18 +1,17 @@
 from django.db import models
+from django.contrib.auth import get_user_model
+from phonenumber_field.modelfields import PhoneNumberField
 from apps.event.models import Event
+from apps.location.models import Address
 
-
-def user_directory_path(instance, filename):
-    # file will be uploaded to MEDIA_ROOT/member/user_<id>/<filename>
-    return 'member/user_{0}/{1}'.format(instance.user.id, filename)
-
+User = get_user_model()
 
 
 class Member(models.Model):
 
     GENDER_CHOICE = [
-        ('m', 'Male'),
-        ('f', 'Female'),
+        ('M', 'Male'),
+        ('F', 'Female'),
     ]
 
     MARITAL_STATUS = [
@@ -26,16 +25,20 @@ class Member(models.Model):
     first_name = models.CharField(max_length=50)
     middle_name = models.CharField(max_length=50, blank=True)
     last_name = models.CharField(max_length=50)
+    date_joined = models.DateField()
+    address = models.ForeignKey(Address, blank=True, null=True, on_delete=models.PROTECT)
     dob = models.DateField()
     gender = models.CharField(choices=GENDER_CHOICE, max_length=1)
     marital_status = models.CharField(choices=MARITAL_STATUS, max_length=1)
+    phone_number = PhoneNumberField()
     email = models.EmailField(unique=True, max_length=254, blank=True)
-    date_started = models.DateField()
-    photo = models.ImageField(upload_to=user_directory_path)
-    note = models.TextField()
-    occupation = models.CharField(max_length=80, blank=True)
+    photo = models.ImageField(upload_to='upload', blank=True)
+    note = models.TextField(blank=True)
+    occupation = models.CharField(blank=True, max_length=255)
+    workplace = models.CharField(blank=True, max_length=255)
     school = models.CharField(max_length=120, blank=True)
     date_added = models.DateTimeField(auto_now_add=True)
+    
 
     class Meta:
         verbose_name = "Member"
@@ -43,6 +46,10 @@ class Member(models.Model):
 
     def __str__(self):
         return self.last_name + " " + self.middle_name + " " + self.first_name
+    
+    def full_name(self):
+        return self.last_name + " " + self.middle_name + " " + self.first_name
+
 
     # def get_absolute_url(self):
     #     return reverse("member_detail", kwargs={"pk": self.pk})
@@ -51,8 +58,8 @@ class Member(models.Model):
 class Visitor(models.Model):
 
     GENDER_CHOICE = [
-        ('m', 'Male'),
-        ('f', 'Female'),
+        ('M', 'Male'),
+        ('F', 'Female'),
     ]
 
     MARITAL_STATUS = [
@@ -82,17 +89,21 @@ class Visitor(models.Model):
     last_name = models.CharField(max_length=50)
     age = models.PositiveSmallIntegerField()
     gender = models.CharField(choices=GENDER_CHOICE, max_length=1)
+    phone_number = PhoneNumberField()
     email = models.EmailField(unique=True, max_length=254, blank=True)
+    address = models.ForeignKey(Address, blank=True, null=True, on_delete=models.PROTECT)
     marital_status = models.CharField(choices=MARITAL_STATUS, max_length=1)
     date = models.DateField()
-    photo = models.ImageField(upload_to=user_directory_path)
-    occupation = models.CharField(max_length=80, blank=True)
+    occupation = models.CharField(blank=True, max_length=255)
+    workplace = models.CharField(blank=True, max_length=255)
     school = models.CharField(max_length=120, blank=True)
     guest_of = models.ForeignKey(Member, blank=True, null=True, on_delete=models.PROTECT)
     event = models.ForeignKey(Event, blank=True, null=True, on_delete=models.PROTECT)
     status = models.CharField(choices=STATUS, max_length=1)
     reason = models.CharField(choices=REASON, max_length=1)
-    note = models.TextField()
+    note = models.TextField(blank=True)
+    received_by = models.OneToOneField(User, on_delete=models.PROTECT)
+    
 
     class Meta:
         verbose_name = "Visitor"
@@ -101,5 +112,19 @@ class Visitor(models.Model):
     def __str__(self):
         return self.last_name + " " + self.middle_name + " " + self.first_name
 
+    def full_name(self):
+        return self.last_name + " " + self.middle_name + " " + self.first_name
+
     # def get_absolute_url(self):
     #     return reverse("member_detail", kwargs={"pk": self.pk})
+
+
+class Attendance(models.Model):
+    event = models.ForeignKey(Event, on_delete=models.PROTECT)
+    men = models.PositiveIntegerField()
+    women = models.PositiveIntegerField()
+    children = models.PositiveIntegerField()
+
+    def __str__(self):
+        return self.event + ": " + self.men
+    

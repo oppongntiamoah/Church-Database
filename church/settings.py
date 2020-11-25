@@ -27,8 +27,11 @@ INSTALLED_APPS = [
     'apps.member',
     'apps.group',
     'apps.event',
+    'apps.location',
+    'apps.finance',
 
     # packages
+    'phonenumber_field',
     
 ]
 

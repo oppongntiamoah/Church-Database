@@ -2,16 +2,9 @@ from django.db import models
 from django.urls import reverse_lazy
 from apps.member.models import Member
 
-# Create your models here.
-
-class GroupType(models.Model):
-    group_type = models.CharField(unique=True, max_length=35)
-    def __str__(self):
-        return self.group_type
 
 class Group(models.Model):
     group_name = models.CharField(max_length=100)
-    group_type = models.ForeignKey(GroupType, blank=True, null=True, on_delete=models.PROTECT)
     group_description = models.CharField(blank=True, max_length=255)
     group_members = models.ManyToManyField(Member, through='GroupMember')
 
