@@ -53,3 +53,17 @@ class MyUser(AbstractBaseUser):
     @property
     def is_staff(self):
         return self.is_admin
+
+
+class Config(models.Model):
+    church_name = models.CharField(max_length=250)
+    sub_name = models.CharField(max_length=250)
+    short_name = models.CharField(max_length=50)
+    branch = models.CharField(max_length=250)
+    branch_pastor = models.CharField(max_length=250)
+    logo = models.ImageField(upload_to=None)
+    color = models.CharField(max_length=50)
+
+    def __str__(self):
+        return self.church_name
+    
