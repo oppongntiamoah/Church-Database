@@ -1,4 +1,4 @@
-<form method="POST" action="{% url 'install' %}" enctype="multipart/form-data">
+<form method="POST" action="{% url 'home' %}" enctype="multipart/form-data">
   {% csrf_token %}
   {{ form.as_p }}
   {{ a_form.as_p }}
