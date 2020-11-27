@@ -27,5 +27,5 @@ def home(request):
 
     
     else:
-        return HttpResponse("Dashboard")
+        return HttpResponse(Config.objects.all())
 
