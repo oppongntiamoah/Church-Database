@@ -1,31 +1,32 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
-from .models import Config
-from .forms import ConfigForm, AdminCreation
+from django.contrib.auth.decorators import login_required
+from apps.member.models import Member, Visitor
+from django.db.models import Count, Sum, F, Max
+import datetime
+
+@login_required
+def dashboard(request):
+
+    # date settings
+    currentYear = datetime.datetime.now().year
+    currentM = datetime.datetime.now().month
+    prevYear = currentYear - 1
+    month = str(datetime.datetime.now().strftime("%B")) + " " + str(currentYear)
 
 
+    # TOTAL MEMEBERS AND VISITORS
+    members = Member.objects.count()
+    visitors = Visitor.objects.count()
 
-def home(request):
-    
-    config = Config.objects.count()
-    if config == 0:
+    # TOTAL VISITORS THIS MONTH
+    visit_month = Visitor.objects.filter(date__year=currentYear).filter(date__month=currentM).count()
 
-        if request.method == 'POST':
-            form = ConfigForm(request.POST, request.FILES)
-            a_form = AdminCreation(request.POST)
-        
-            if form.is_valid() and a_form.is_valid():
-                form.save()
-                a_form.save()
-                return redirect('login')
-                
-        else:
-            form = ConfigForm()
-            a_form = AdminCreation()
-        
-        return render(request, 'config/config.html', {'form': form, 'a_form': a_form})
+    #
 
-    
-    else:
-        return HttpResponse(Config.objects.all())
-
+    context = {
+        'members': members,
+        'visitors': visitors,
+        'visit_month': visit_month,
+    }
+    return render(request, 'index.html', context)

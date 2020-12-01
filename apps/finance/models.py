@@ -17,7 +17,7 @@ class Offertory(models.Model):
         verbose_name_plural = verbose_name
 
     def __str__(self):
-        return self.name
+        return self.event.name + ": " + str(self.date_received)
 
     def get_absolute_url(self):
         return reverse("fffertory_detail", kwargs={"pk": self.pk})
@@ -47,7 +47,7 @@ class Giving(models.Model):
 class Contribution_Type(models.Model):
 
     name = models.CharField(unique=True, max_length=250)
-    is_active = models.BooleanField(default=False)
+    is_active = models.BooleanField(default=True)
     start_date = models.DateField(blank=True)
     end_date = models.DateField(blank=True)
     note = models.TextField(blank=True)
@@ -66,6 +66,7 @@ class Contribution_Type(models.Model):
 class Contribution(models.Model):
 
     member = models.ForeignKey(Member, blank=True, null=True, on_delete=models.PROTECT)
+    contribution_type = models.ForeignKey(Contribution_Type, on_delete=models.PROTECT)
     visitor = models.ForeignKey(Visitor, blank=True, null=True, on_delete=models.PROTECT)
     amount = models.DecimalField(max_digits=5, decimal_places=2)
     date_received = models.DateField()
@@ -76,7 +77,7 @@ class Contribution(models.Model):
         verbose_name_plural = "contribution's"
 
     def __str__(self):
-        return self.member.full_name or self.visitor.full_name
+        return self.member.full_name + " - " + self.contribution_type.name or self.visitor.full_name + " - " + self.contribution_type.name
 
     def get_absolute_url(self):
         return reverse("contribution_detail", kwargs={"pk": self.pk})

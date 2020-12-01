@@ -7,4 +7,7 @@ urlpatterns = [
     
     # account
     path('', include('apps.account.urls')),
+
+    # member
+    #path('member/', include('apps.member.urls')),
 ]

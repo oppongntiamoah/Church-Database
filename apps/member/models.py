@@ -47,6 +47,8 @@ class Member(models.Model):
     def __str__(self):
         return self.last_name + " " + self.middle_name + " " + self.first_name
     
+    
+    @property
     def full_name(self):
         return self.last_name + " " + self.middle_name + " " + self.first_name
 
@@ -112,6 +114,9 @@ class Visitor(models.Model):
     def __str__(self):
         return self.last_name + " " + self.middle_name + " " + self.first_name
 
+
+
+    @property
     def full_name(self):
         return self.last_name + " " + self.middle_name + " " + self.first_name
 
@@ -124,7 +129,15 @@ class Attendance(models.Model):
     men = models.PositiveIntegerField()
     women = models.PositiveIntegerField()
     children = models.PositiveIntegerField()
+    visitors = models.PositiveIntegerField()
+    date = models.DateField()
+    note = models.TextField(blank=True)
+
+    @property
+    def total(self):
+        ttl = self.men + self.women + self.children + self.visitors
+        return ttl
 
     def __str__(self):
-        return self.event + ": " + self.men
+        return self.event.name + ": " + str(self.total)
     

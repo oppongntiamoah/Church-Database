@@ -1,0 +1,103 @@
+{% extends 'base.html' %}
+{% load static humanize %}
+
+{% block content %}
+
+<!-- begin row -->
+			<div class="row">
+				
+				<!-- begin col-3 -->
+				<div class="col-lg-3 col-md-6">
+					<div class="widget widget-stats bg-orange">
+						<div class="stats-icon"><i class="fa fa-link"></i></div>
+						<div class="stats-info">
+							<h4>Memebers</h4>
+							<p>{{ members|intcomma }}</p>	
+						</div>
+						<div class="stats-link">
+							<a href="javascript:;">View Detail <i class="fa fa-arrow-alt-circle-right"></i></a>
+						</div>
+					</div>
+				</div>
+				<!-- end col-3 -->
+				<!-- begin col-3 -->
+				<div class="col-lg-3 col-md-6">
+					<div class="widget widget-stats bg-grey-darker">
+						<div class="stats-icon"><i class="fa fa-users"></i></div>
+						<div class="stats-info">
+							<h4>VISITORS</h4>
+							<p>{{ visitors|intcomma }}</p>	
+						</div>
+						<div class="stats-link">
+							<a href="javascript:;">View Detail <i class="fa fa-arrow-alt-circle-right"></i></a>
+						</div>
+					</div>
+				</div>
+				<!-- end col-3 -->
+				<!-- begin col-3 -->
+				<div class="col-lg-3 col-md-6">
+					<div class="widget widget-stats bg-black-lighter">
+						<div class="stats-icon"><i class="fa fa-clock"></i></div>
+						<div class="stats-info">
+							<h4>VISITORS THIS MONTH</h4>
+							<p>{{ visit_month|intcomma }}</p>	
+						</div>
+						<div class="stats-link">
+							<a href="javascript:;">View Detail <i class="fa fa-arrow-alt-circle-right"></i></a>
+						</div>
+					</div>
+				</div>
+				<!-- end col-3 -->
+				<!-- begin col-3 -->
+				<div class="col-lg-3 col-md-6">
+					<div class="widget widget-stats bg-red">
+						<div class="stats-icon"><i class="fa fa-desktop"></i></div>
+						<div class="stats-info">
+							<h4>TOTAL VISITORS</h4>
+							<p>3,291,922</p>	
+						</div>
+						<div class="stats-link">
+							<a href="javascript:;">View Detail <i class="fa fa-arrow-alt-circle-right"></i></a>
+						</div>
+					</div>
+				</div>
+				<!-- end col-3 -->
+			</div>
+			<!-- end row -->
+            
+            
+{% endblock content %}
+
+
+{% block extrajs %}
+
+<script src="{% static 'plugins/gritter/js/jquery.gritter.js' %}"></script>
+	<script src="{% static 'plugins/flot/jquery.flot.min.js' %}"></script>
+	<script src="{% static 'plugins/flot/jquery.flot.time.min.js' %}"></script>
+	<script src="{% static 'plugins/flot/jquery.flot.resize.min.js' %}"></script>
+	<script src="{% static 'plugins/flot/jquery.flot.pie.min.js' %}"></script>
+	<script src="{% static 'plugins/sparkline/jquery.sparkline.js' %}"></script>
+	<script src="{% static 'plugins/jquery-jvectormap/jquery-jvectormap.min.js' %}"></script>
+	<script src="{% static 'plugins/jquery-jvectormap/jquery-jvectormap-world-mill-en.js' %}"></script>
+	<script src="{% static 'plugins/bootstrap-datepicker/js/bootstrap-datepicker.js' %}"></script>
+	<script src="{% static 'js/demo/dashboard.min.js' %}"></script>
+	
+	<script>
+		$(document).ready(function() {
+			App.init();
+			Dashboard.init();
+		});
+	</script>
+{% endblock extrajs %}
+
+
+{% block extrastyle %}
+
+<!-- ================== BEGIN PAGE LEVEL STYLE ================== -->
+	<link href="{% static 'plugins/jquery-jvectormap/jquery-jvectormap.css' %}" rel="stylesheet" />
+	<link href="{% static 'plugins/bootstrap-datepicker/css/bootstrap-datepicker.css' %}" rel="stylesheet" />
+    <link href="{% static 'plugins/gritter/css/jquery.gritter.css' %}" rel="stylesheet" />
+	<!-- ================== END PAGE LEVEL STYLE ================== -->
+
+
+{% endblock extrastyle %}
