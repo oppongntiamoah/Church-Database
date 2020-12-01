@@ -3,6 +3,7 @@ from django.contrib.auth import get_user_model
 from phonenumber_field.modelfields import PhoneNumberField
 from apps.event.models import Event
 from apps.location.models import Address
+from django.urls import reverse
 
 User = get_user_model()
 
@@ -32,7 +33,7 @@ class Member(models.Model):
     marital_status = models.CharField(choices=MARITAL_STATUS, max_length=1)
     phone_number = PhoneNumberField()
     email = models.EmailField(unique=True, max_length=254, blank=True)
-    photo = models.ImageField(upload_to='upload', blank=True)
+    photo = models.ImageField(upload_to='member/', blank=True)
     note = models.TextField(blank=True)
     occupation = models.CharField(blank=True, max_length=255)
     workplace = models.CharField(blank=True, max_length=255)
@@ -50,11 +51,11 @@ class Member(models.Model):
     
     @property
     def full_name(self):
-        return self.last_name + " " + self.middle_name + " " + self.first_name
+        return self.last_name + " " + self.first_name + " " + self.middle_name
 
 
-    # def get_absolute_url(self):
-    #     return reverse("member_detail", kwargs={"pk": self.pk})
+    def get_absolute_url(self):
+        return reverse("member_detail", kwargs={"pk": self.pk})
 
 
 class Visitor(models.Model):
@@ -120,8 +121,8 @@ class Visitor(models.Model):
     def full_name(self):
         return self.last_name + " " + self.middle_name + " " + self.first_name
 
-    # def get_absolute_url(self):
-    #     return reverse("member_detail", kwargs={"pk": self.pk})
+    def get_absolute_url(self):
+        return reverse("visitor_detail", kwargs={"pk": self.pk})
 
 
 class Attendance(models.Model):
