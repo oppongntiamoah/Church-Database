@@ -32,6 +32,7 @@ INSTALLED_APPS = [
     'apps.event',
     'apps.location',
     'apps.finance',
+    'apps.newsletter',
 
     # packages
     'phonenumber_field',
@@ -140,3 +141,7 @@ AUTH_USER_MODEL = 'account.MyUser'
 LOGIN_REDIRECT_URL = 'dashboard'
 LOGIN_URL = 'login'
 LOGOUT_REDIRECT_URL = 'login'
+
+
+# EMAIL BACKEND
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
