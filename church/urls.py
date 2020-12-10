@@ -13,8 +13,6 @@ urlpatterns = [
     # member
     path('member/', include('apps.member.urls')),
 
-    path('grappelli/', include('grappelli.urls')), # grappelli URLS
-
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
