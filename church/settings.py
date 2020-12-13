@@ -76,7 +76,7 @@ WSGI_APPLICATION = 'church.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'church',
+        'NAME': 'lkm',
         'HOST': '127.0.0.1',
         'USER': 'postgres',
         'PASSWORD': 'admin',

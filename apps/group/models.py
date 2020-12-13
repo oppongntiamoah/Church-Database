@@ -27,7 +27,7 @@ class MemRole(models.Model):
         return self.mem_role
 
 class GroupMember(models.Model):
-    member = models.ForeignKey(Member, on_delete=models.PROTECT)
+    member = models.OneToOneField(Member, on_delete=models.PROTECT)
     group = models.ForeignKey(Group, on_delete=models.PROTECT)
     leader = models.BooleanField(default=False)
     member_role = models.ForeignKey(MemRole, blank=True, null=True, on_delete=models.PROTECT)

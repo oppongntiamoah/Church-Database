@@ -43,7 +43,7 @@ class Member(models.Model):
 
     class Meta:
         verbose_name = "Member"
-        verbose_name_plural = "Member's"
+        verbose_name_plural = verbose_name
 
     def __str__(self):
         return self.last_name + " " + self.middle_name + " " + self.first_name
@@ -56,6 +56,8 @@ class Member(models.Model):
 
     def get_absolute_url(self):
         return reverse("member_detail", kwargs={"pk": self.pk})
+    
+    
 
 
 class Visitor(models.Model):
@@ -110,7 +112,7 @@ class Visitor(models.Model):
 
     class Meta:
         verbose_name = "Visitor"
-        verbose_name_plural = "Visitor's"
+        verbose_name_plural = verbose_name
 
     def __str__(self):
         return self.last_name + " " + self.middle_name + " " + self.first_name
