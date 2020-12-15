@@ -27,10 +27,6 @@ class GivingAdmin(admin.ModelAdmin):
     list_display = ('member', 'amount', 'date_received', 'note')
     date_hierarchy = 'date_received'
 
-    def save_model(self, request, obj, form, change):
-        obj.note = request.user
-        super().save_model(request, obj, form, change)
-
 
 @admin.register(Donation)
 class DonationAdmin(admin.ModelAdmin):
@@ -44,3 +40,4 @@ class TitheAdmin(admin.ModelAdmin):
     date_hierarchy = 'date_received'
     ordering = ('member',)
     list_filter = ('month', )
+    

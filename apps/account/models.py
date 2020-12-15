@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import BaseUserManager, AbstractBaseUser
 
+
 class MyUserManager(BaseUserManager):
     def create_user(self, email, password=None):
         
@@ -49,6 +50,7 @@ class MyUser(AbstractBaseUser):
 
     def has_module_perms(self, app_label):
         return True
+        
 
     @property
     def is_staff(self):

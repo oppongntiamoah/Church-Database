@@ -11,6 +11,9 @@ djangorestframework = "*"
 pillow = "*"
 psycopg2 = "*"
 django-phonenumber-field = {extras = ["phonenumbers"], version = "*"}
+django-jazzmin = "*"
+twilio = "*"
+django-environ = "*"
 
 [requires]
 python_version = "3.8"

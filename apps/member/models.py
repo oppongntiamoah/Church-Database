@@ -4,6 +4,8 @@ from phonenumber_field.modelfields import PhoneNumberField
 from apps.event.models import Event
 from apps.location.models import Address
 from django.urls import reverse
+from apps.newsletter.send_sms import sendSMS
+
 
 User = get_user_model()
 
@@ -107,7 +109,7 @@ class Visitor(models.Model):
     status = models.CharField(choices=STATUS, max_length=1)
     reason = models.CharField(choices=REASON, max_length=1)
     note = models.TextField(blank=True)
-    received_by = models.OneToOneField(User, on_delete=models.PROTECT)
+    #received_by = models.OneToOneField(User, on_delete=models.PROTECT)
     
 
     class Meta:
@@ -123,8 +125,17 @@ class Visitor(models.Model):
     def full_name(self):
         return self.last_name + " " + self.middle_name + " " + self.first_name
 
-    def get_absolute_url(self):
-        return reverse("visitor_detail", kwargs={"pk": self.pk})
+    # !sending sms
+    def save(self, *args, **kwargs):
+        body = 'Thanks for Visiting Us'
+        to = str(self.phone_number)
+        
+        created = self.pk is None
+        super().save(*args, **kwargs)
+
+        if created:
+            sendSMS(body, to, "Visitor") 
+
 
 
 class Attendance(models.Model):
