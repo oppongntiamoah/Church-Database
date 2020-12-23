@@ -16,7 +16,7 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
 
-    'jazzmin',
+    #'jazzmin',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -77,7 +77,7 @@ WSGI_APPLICATION = 'church.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'lkm',
+        'NAME': 'church',
         'HOST': '127.0.0.1',
         'USER': 'postgres',
         'PASSWORD': 'admin',
@@ -139,8 +139,8 @@ AUTH_USER_MODEL = 'account.MyUser'
 
 # auth settings
 LOGIN_REDIRECT_URL = 'dashboard'
-LOGIN_URL = 'login'
-LOGOUT_REDIRECT_URL = 'login'
+LOGIN_URL = '/'
+LOGOUT_REDIRECT_URL = '/'
 
 
 # EMAIL BACKEND

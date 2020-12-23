@@ -22,7 +22,7 @@ def dashboard(request):
     # TOTAL VISITORS THIS MONTH
     visit_month = Visitor.objects.filter(date__year=currentYear).filter(date__month=currentM).count()
 
-    #
+    # gp = revenue - expenses
 
     context = {
         'members': members,

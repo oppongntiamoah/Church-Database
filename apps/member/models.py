@@ -127,7 +127,7 @@ class Visitor(models.Model):
 
     # !sending sms
     def save(self, *args, **kwargs):
-        body = 'Thanks for Visiting Us'
+        body = 'We are honoured to have you visit us today. We look forward to seeing you again. LKM, We Love...'
         to = str(self.phone_number)
         
         created = self.pk is None

@@ -131,7 +131,7 @@ class Donation(models.Model):
         return self.last_name
 
     def save(self, *args, **kwargs):
-        body = 'Your Donation to has been received, thanks.'
+        body = 'Your Donation to  has been received, thanks.'
         to = str(self.phone_number)
 
         created = self.pk is None
@@ -174,3 +174,19 @@ class Tithe(models.Model):
         if created:
             sendSMS(body, to, "Tithe") 
 
+
+class Expense(models.Model):
+
+    EXPENSE_TYPE = (
+        ('g', 'General'),
+        ('d', 'Donations'),
+    )
+
+    amount = models.DecimalField(max_digits=15, decimal_places=2)
+    expense_type = models.CharField(choices=EXPENSE_TYPE, max_length=1)
+    date = models.DateField()
+    note = models.TextField(blank=True)
+
+    def __str__(self):
+        return self.expense_type
+    
